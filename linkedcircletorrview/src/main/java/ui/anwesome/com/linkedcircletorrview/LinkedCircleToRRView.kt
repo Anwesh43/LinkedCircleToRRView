@@ -5,6 +5,7 @@ package ui.anwesome.com.linkedcircletorrview
  */
 
 
+import android.app.Activity
 import android.view.View
 import android.view.MotionEvent
 import android.graphics.Canvas
@@ -194,6 +195,14 @@ class LinkedCircleToRRView(ctx : Context) : View(ctx) {
             crr.startUpdating {
                 animator.start()
             }
+        }
+    }
+
+    companion object {
+        fun create(activity : Activity) : LinkedCircleToRRView {
+            val view : LinkedCircleToRRView = LinkedCircleToRRView(activity)
+            activity.setContentView(view)
+            return view
         }
     }
 }
