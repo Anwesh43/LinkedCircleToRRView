@@ -19,7 +19,7 @@ val nodes : Int = 5
 fun Canvas.drawCRRNode(i : Int, scale : Float, paint : Paint) {
     val w : Float = width.toFloat()
     val h : Float = height.toFloat()
-    val gap : Float = w / (nodes + 1)
+    val gap : Float = h / (nodes + 1)
     val r : Float = gap / 6
     paint.strokeCap = Paint.Cap.ROUND
     paint.style = Paint.Style.STROKE
@@ -29,11 +29,11 @@ fun Canvas.drawCRRNode(i : Int, scale : Float, paint : Paint) {
     translate(w/2, i * gap + gap)
     for (j in 0..1) {
         save()
-        val sc : Float = Math.max(0.5f, Math.max(scale - 0.5f * j, 0f)) * 2
+        val sc : Float = Math.min(0.5f, Math.max(scale - 0.5f * j, 0f)) * 2
         val sf : Float = 1f - 2 * j
         scale(sf, 1f)
-        drawLine(0f, -gap/3, r * sc, -gap/3, paint)
-        drawLine(0f, gap/3, r * sc, gap/3, paint)
+        drawLine(0f, -r, r * sc, -r, paint)
+        drawLine(0f, r, r * sc, r, paint)
         save()
         translate(r * sc, 0f)
         drawArc(RectF(-r, -r, r, r), -90f, 180f, false, paint)
