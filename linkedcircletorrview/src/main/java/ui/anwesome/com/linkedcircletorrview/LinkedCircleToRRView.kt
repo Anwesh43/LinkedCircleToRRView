@@ -9,11 +9,38 @@ import android.view.View
 import android.view.MotionEvent
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.RectF
 import android.graphics.Color
 import android.content.Context
 
 val nodes : Int = 5
+
+fun Canvas.drawCRRNode(i : Int, scale : Float, paint : Paint) {
+    val w : Float = width.toFloat()
+    val h : Float = height.toFloat()
+    val gap : Float = w / (nodes + 1)
+    val r : Float = gap / 6
+    paint.strokeCap = Paint.Cap.ROUND
+    paint.style = Paint.Style.STROKE
+    paint.strokeWidth = Math.min(w, h) / 60
+    paint.color = Color.parseColor("#673AB7")
+    save()
+    translate(w/2, i * gap + gap)
+    for (j in 0..1) {
+        save()
+        val sc : Float = Math.max(0.5f, Math.max(scale - 0.5f * j, 0f)) * 2
+        val sf : Float = 1f - 2 * j
+        scale(sf, 1f)
+        drawLine(0f, -gap/3, r * sc, -gap/3, paint)
+        drawLine(0f, gap/3, r * sc, gap/3, paint)
+        save()
+        translate(r * sc, 0f)
+        drawArc(RectF(-r, -r, r, r), -90f, 180f, false, paint)
+        restore()
+        restore()
+    }
+    restore()
+}
 
 class LinkedCircleToRRView(ctx : Context) : View(ctx) {
 
